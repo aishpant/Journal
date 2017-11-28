@@ -1,0 +1,19 @@
+* 2017 11 28, Tuesday
+
+This is my last week at @Flipkart! Thursday- November 30th will be my last day
+of work, after which I go on a 4-month sabbatical. I have to return all my IT
+assets. Bye bye MacBook Pro :'-(
+
+TODOs for this week:
+
+1) Write a blog post about Outreachy selection and/or a project description.
+Writing one every two weeks is one of the mandatory parts of the internship. I
+did set up a blog last week using hugo at aishpant.github.io but it's empty.
+
+2) Back up data from office laptop.
+
+3) Set up the borrowed laptop with the linux codebase and all my dotfiles.
+
+4) Become friends with tmux.
+
+5) Go through the vimtutor tutorial 3 more times.

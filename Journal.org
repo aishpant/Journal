@@ -17,3 +17,22 @@ did set up a blog last week using hugo at aishpant.github.io but it's empty.
 4) Become friends with tmux.
 
 5) Go through the vimtutor tutorial 3 more times.
+
+* 2017 11 29, Wednesday
+
+Finished one iteration of the vimtutor tutorial. Added first proper blog post on
+my blog! It's kind of temporary and rough but it's finally a start! With this
+done, I sent off the links to Outreachy organisers.
+
+Cleaned up the deployment of personal website. Added aishpant.github.io as a
+submodule to hugo content repo. Didn't know that tracking of two different repos
+was possible in this way.
+
+Currently working through a Markdown tutorial. I want to get this right. Should
+add social links to the blog site.
+
+The hard drive was delivered today. Backed up all office data. The other
+important stuff is tracked already. Not much left to do here. Things move
+forward very slowly. Reviewed a pull request.
+
+Oh that reminds me I should backup dotfiles from my VM also. I'll do that.

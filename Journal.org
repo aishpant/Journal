@@ -6,17 +6,15 @@ assets. Bye bye MacBook Pro :'-(
 
 TODOs for this week:
 
-1) Write a blog post about Outreachy selection and/or a project description.
-Writing one every two weeks is one of the mandatory parts of the internship. I
-did set up a blog last week using hugo at aishpant.github.io but it's empty.
+1. Write a blog post about Outreachy selection and/or a project description. Writing one every two weeks is one of the mandatory parts of the internship. I did set up a blog last week using hugo at aishpant.github.io but it's empty.
 
-2) Back up data from office laptop.
+2. Back up data from office laptop.
 
-3) Set up the borrowed laptop with the linux codebase and all my dotfiles.
+3. Set up the borrowed laptop with the linux codebase and all my dotfiles.
 
-4) Become friends with tmux.
+4. Become friends with tmux.
 
-5) Go through the vimtutor tutorial 3 more times.
+5. Go through the vimtutor tutorial 3 more times.
 
 * 2017 11 29, Wednesday
 
@@ -36,3 +34,8 @@ important stuff is tracked already. Not much left to do here. Things move
 forward very slowly. Reviewed a pull request.
 
 Oh that reminds me I should backup dotfiles from my VM also. I'll do that.
+
+* 2017 11 30, Thursday
+
+Last day of work. Feeling odd. Mixed feelings. Went out in the evening.
+

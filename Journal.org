@@ -39,3 +39,53 @@ Oh that reminds me I should backup dotfiles from my VM also. I'll do that.
 
 Last day of work. Feeling odd. Mixed feelings. Went out in the evening.
 
+* 2017 12 01, Friday
+
+Spent most of the day struggling with Arch Linux. I fail to see how this is any
+better than Ubuntu or Debian or Mint or Fedora.
+
+`pacman` is the default PACkage MANager here. The tldr page is enough to get
+started. The other, `yaourt` works just like pacman and contains scripts to
+download the lastest packages that have not made into official repos yet.
+
+I should do a newbie write-up on how to compile linux kernel in arch.
+
+* 2017 12 04, Monday
+
+Doesn't really feel like a Monday. Cold weather (for Bangalore) and lazy.
+Needed one chai and two cups of coffee to wake up.
+
+TIL about the PBKDF2 (Password Based Key Derivation Function v2). Maybe I could
+talk about this at a PWL. My day job has never involved reading white papers.
+And if I don't read any, I'm afraid I might become out-of-date. Another aspect
+of this, which interests me is speaking in public. I don't think I have ever
+done it out of choice. I have reached a point now where it is necessary to
+embrace fear.
+
+Read lots of blog posts by Jeffrey Goldberg (Defender Against The Dark Arts at
+1Password). In each iteration, password or the transformed key is encrypted by
+a process called HMAC-SHA1(?).
+
+Password hashing algorithms are designed to be purposefully slow in contrast to
+crypotgraphic hashing functions. Some good password hashing schemes:
+1. bcrypt
+2. scrypt
+3. PBKDF2
+
+Usually salting is added before passwords are encrypted. For eg. adding a
+random string at the beginning or the end. This is done to prevent check
+against a pre-computed list of hashes. The salt is not a secret. It's random
+and uniquely generated per password.
+
+Today I also learnt how 2-step authentication works using HOTP or TOTP
+protocols! I am already on GNU pass but I still had a couple of old weak
+passwords. It was a pain trying to figure out how to enable copy-paste on ICICI
+bank website. You wouldn't expect bank websites to be clueless about security.
+
+Read 2 chapters of I,Robot. This is my first Asimov. Why did I not read him
+before?
+
+[Giorgio by Morodor - Daft Punk](https://youtu.be/zhl-Cs1-sG4) - Beautiful
+intro, all 9 minutes of the music is breathtaking.
+
+Caffeine count - 2 tulsi masala chais, 1 filter coffee, 1 cold coffee, 1 black tea

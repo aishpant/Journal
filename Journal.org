@@ -58,7 +58,7 @@ Needed one chai and two cups of coffee to wake up.
 TIL about the PBKDF2 (Password Based Key Derivation Function v2). Maybe I could
 talk about this at a PWL. My day job has never involved reading white papers.
 And if I don't read any, I'm afraid I might become out-of-date. Another aspect
-of this, which interests me is speaking in public. I don't think I have ever
+of this which interests me is speaking in public. I don't think I have ever
 done it out of choice. I have reached a point now where it is necessary to
 embrace fear.
 
@@ -85,7 +85,28 @@ bank website. You wouldn't expect bank websites to be clueless about security.
 Read 2 chapters of I,Robot. This is my first Asimov. Why did I not read him
 before?
 
-[Giorgio by Morodor - Daft Punk](https://youtu.be/zhl-Cs1-sG4) - Beautiful
+[[https://youtu.be/zhl-Cs1-sG4][Giorgio by Morodor - Daft Punk]] - Beautiful
 intro, all 9 minutes of the music is breathtaking.
 
 Caffeine count - 2 tulsi masala chais, 1 filter coffee, 1 cold coffee, 1 black tea
+
+* 2017 12 05, Tuesday
+
+First day of the internship! Had a chat today with Julia (my mentor). We came
+up with a list of 4 tasks for this week and then we meet again on Friday:
+
+1. During the application period, I wrote a script to find all pairs of type (ATTRIBUTE_DECLARING_MACRO, ATTRIBUTE_POSITION). There were 217 such pairs. Then, using these I went in the other direction and uncovered some 3500 undocumented sysfs attributes. Because my script did not account for regex, there might be some false positives. So, I'll spend a couple of days to refine the script.
+2. At some places, the __ATTR(...) macro is being used directly for attribute declaration. I should find out all usages and replace them with the more conventional DEVICE_ATTR_RO/RW(...) macros.
+3. Send a Documentation/ABI patch to move one undocumented attribute to its right place and see how that goes.
+4. Write a blog post on my Outreachy project, the motivations etc.
+
+As I understand the documentation is not all for me to do. I am not equipped
+with enough knowledge to fill in the documentation for all devices. The purpose
+is to help others to find undocumented places and fill these gaps easily.
+
+This should be helpful for people trying to set-up a device. They shouldn't
+have to look-up the codebase to understand how to use it.
+
+Lots to do this week.
+
+Caffeine count: 2 tulsi masala chais, 1 black tea

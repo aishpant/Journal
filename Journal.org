@@ -110,3 +110,41 @@ have to look-up the codebase to understand how to use it.
 Lots to do this week.
 
 Caffeine count: 2 tulsi masala chais, 1 black tea
+
+* 2017 12 07, Thursday
+
+Ported all of my scripts from python2 to python3 and uploaded them on Github:
+https://github.com/aishpant/attribute-documentation
+
+There are 2 main cocci scripts here:
+1. Given a list of attributes documented in Documentation/ABI, it looks for all the declaring macros for them
+2. Then using those declaring macros and the attribute position in the macros, we try to find all undocumented ones.
+
+The first takes a lot of time to run. On driver code alone, it would take upto
+16 hours to run on a VM with a single core. But I was happy to find that it
+takes just 2 hrs 30 minutes now on a 4 core machine (using the -j numOfCores
+flag on spatch). Furthur, using
+[[https://www.gnu.org/software/idutils/][idutils]] gets the time down by 15-20
+minutes.
+
+Yesterday, I wrote another script that takes all the undocumented attributes
+and greps for their usage in Documentation/ABI, If none is found, then
+definitely these need to be ported. It's a list of about 900. I know that doing
+this is not my work and is little help to what I want to do but it can help me
+find some patterns. Kinda frustrating that I keep getting stuck here. But I can
+use this data to send a patch for undocumented attributes (that I mention in my
+weekly task).
+
+I am now working on a script to convert raw __ATTR calls to their DEVICE_ATTR
+counterparts. This is useful because it helps in readability of the code.
+Should be done quickly.
+
+Arch Linux is growing on me. The package managment system is very simple to
+understand and works predictably.
+
+[[https://wiki.archlinux.org/index.php/Arch_User_Repository][AUR]]
+[[https://wiki.archlinux.org/index.php/pacman][Pacman]]
+
+Read 40 more pages of [[https://www.goodreads.com/book/show/50367.From_Heaven_Lake][From Heaven Lake by Vikram Seth]]. I like how reading is progressing these days.
+
+Caffeine count - 2 tulsi masala chais, 1 black tea

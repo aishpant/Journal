@@ -148,3 +148,57 @@ understand and works predictably.
 Read 40 more pages of [[https://www.goodreads.com/book/show/50367.From_Heaven_Lake][From Heaven Lake by Vikram Seth]]. I like how reading is progressing these days.
 
 Caffeine count - 2 tulsi masala chais, 1 black tea
+
+* 2017 12 08, Friday
+
+spatch errors that I see frequently:
+
+spatch -sp-file convert_attr.cocci --dir ~/projects/linux/drivers/staging/ --use-idutils --debug
+
+1.
+
+@@
+identifier foo, bar;
+@@
+
+- foo
++ bar
+(...)
+
+disjunction parenthesis in line 6 column 0 matched to normal parenthesis on line 7
+
+Coccinelle treats column 0 of any line in a special way. So we should only put
+characters on column 0 that we want to be treated specially like +, - , or
+parentheses which are part of a disjunction (|). Error of this type can be
+fixed by preceding the line with spaces.
+
+2.
+
+@@
+identifier T, baz, foo, bar;
+@@
+
+struct T baz = {
+ ...,
+- foo
++ bar
+ }
+
+minus: parse error:
+  File "convert_attr.cocci", line 10, column 0, charpos = 78
+  around = '',
+  whole content =
+
+The error thrown over here is not very helpful. It actually means that
+coccinelle expects here a valid C statement. A statement like struct device dev = {..}
+does not exist but struct dev = {...}; (followed by semi-colon) does.
+
+Wrote a coccinelle script to convert __ATTR macros to __DEVICE_ATTR in drivers.
+Need to write another to convert DEVICE_ATTR to DEVICE_ATTR_{RO/RW/WO} (these
+are subcases).
+
+Had another meeting with Julia. She was concerned about the number of falsely
+positive macros. Suggested a technique to reward/penalise macros basis the
+presence of the declared attributes in Documentation/ABI. Since I found some
+220 macros and it will be cumbersome to look through all to rule out the bad
+ones, this should decrease the size of the set.

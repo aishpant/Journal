@@ -1,4 +1,4 @@
-* 2017 11 28, Tuesday
+## 2017 11 28, Tuesday
 
 This is my last week at @Flipkart! Thursday- November 30th will be my last day
 of work, after which I go on a 4-month sabbatical. I have to return all my IT
@@ -16,7 +16,7 @@ TODOs for this week:
 
 5. Go through the vimtutor tutorial 3 more times.
 
-* 2017 11 29, Wednesday
+## 2017 11 29, Wednesday
 
 Finished one iteration of the vimtutor tutorial. Added first proper blog post on
 my blog! It's kind of temporary and rough but it's finally a start! With this
@@ -35,11 +35,11 @@ forward very slowly. Reviewed a pull request.
 
 Oh that reminds me I should backup dotfiles from my VM also. I'll do that.
 
-* 2017 11 30, Thursday
+## 2017 11 30, Thursday
 
 Last day of work. Feeling odd. Mixed feelings. Went out in the evening.
 
-* 2017 12 01, Friday
+## 2017 12 01, Friday
 
 Spent most of the day struggling with Arch Linux. I fail to see how this is any
 better than Ubuntu or Debian or Mint or Fedora.
@@ -50,7 +50,7 @@ download the lastest packages that have not made into official repos yet.
 
 I should do a newbie write-up on how to compile linux kernel in arch.
 
-* 2017 12 04, Monday
+## 2017 12 04, Monday
 
 Doesn't really feel like a Monday. Cold weather (for Bangalore) and lazy.
 Needed one chai and two cups of coffee to wake up.
@@ -85,18 +85,18 @@ bank website. You wouldn't expect bank websites to be clueless about security.
 Read 2 chapters of I,Robot. This is my first Asimov. Why did I not read him
 before?
 
-[[https://youtu.be/zhl-Cs1-sG4][Giorgio by Morodor - Daft Punk]] - Beautiful
+[Giorgio by Morodor - Daft Punk](https://youtu.be/zhl-Cs1-sG4) - Beautiful
 intro, all 9 minutes of the music is breathtaking.
 
 Caffeine count - 2 tulsi masala chais, 1 filter coffee, 1 cold coffee, 1 black tea
 
-* 2017 12 05, Tuesday
+## 2017 12 05, Tuesday
 
 First day of the internship! Had a chat today with Julia (my mentor). We came
 up with a list of 4 tasks for this week and then we meet again on Friday:
 
-1. During the application period, I wrote a script to find all pairs of type (ATTRIBUTE_DECLARING_MACRO, ATTRIBUTE_POSITION). There were 217 such pairs. Then, using these I went in the other direction and uncovered some 3500 undocumented sysfs attributes. Because my script did not account for regex, there might be some false positives. So, I'll spend a couple of days to refine the script.
-2. At some places, the __ATTR(...) macro is being used directly for attribute declaration. I should find out all usages and replace them with the more conventional DEVICE_ATTR_RO/RW(...) macros.
+1. During the application period, I wrote a script to find all pairs of type (ATTRIBUTE\_DECLARING\_MACRO, ATTRIBUTE\_POSITION). There were 217 such pairs. Then, using these I went in the other direction and uncovered some 3500 undocumented sysfs attributes. Because my script did not account for regex, there might be some false positives. So, I'll spend a couple of days to refine the script.
+2. At some places, the \_\_ATTR(...) macro is being used directly for attribute declaration. I should find out all usages and replace them with the more conventional DEVICE\_ATTR\_RO/RW(...) macros.
 3. Send a Documentation/ABI patch to move one undocumented attribute to its right place and see how that goes.
 4. Write a blog post on my Outreachy project, the motivations etc.
 
@@ -111,7 +111,7 @@ Lots to do this week.
 
 Caffeine count: 2 tulsi masala chais, 1 black tea
 
-* 2017 12 07, Thursday
+## 2017 12 07, Thursday
 
 Ported all of my scripts from python2 to python3 and uploaded them on Github:
 https://github.com/aishpant/attribute-documentation
@@ -124,7 +124,7 @@ The first takes a lot of time to run. On driver code alone, it would take upto
 16 hours to run on a VM with a single core. But I was happy to find that it
 takes just 2 hrs 30 minutes now on a 4 core machine (using the -j numOfCores
 flag on spatch). Furthur, using
-[[https://www.gnu.org/software/idutils/][idutils]] gets the time down by 15-20
+[idutils](https://www.gnu.org/software/idutils/) gets the time down by 15-20
 minutes.
 
 Yesterday, I wrote another script that takes all the undocumented attributes
@@ -135,28 +135,30 @@ find some patterns. Kinda frustrating that I keep getting stuck here. But I can
 use this data to send a patch for undocumented attributes (that I mention in my
 weekly task).
 
-I am now working on a script to convert raw __ATTR calls to their DEVICE_ATTR
+I am now working on a script to convert raw \_\_ATTR calls to their DEVICE\_ATTR
 counterparts. This is useful because it helps in readability of the code.
 Should be done quickly.
 
 Arch Linux is growing on me. The package managment system is very simple to
 understand and works predictably.
 
-[[https://wiki.archlinux.org/index.php/Arch_User_Repository][AUR]]
-[[https://wiki.archlinux.org/index.php/pacman][Pacman]]
+[AUR](https://wiki.archlinux.org/index.php/Arch_User_Repository)
+[Pacman](https://wiki.archlinux.org/index.php/pacman)
 
-Read 40 more pages of [[https://www.goodreads.com/book/show/50367.From_Heaven_Lake][From Heaven Lake by Vikram Seth]]. I like how reading is progressing these days.
+Read 40 more pages of [From Heaven Lake by Vikram Seth](https://www.goodreads.com/book/show/50367.From_Heaven_Lake). I like how reading is progressing these days.
 
 Caffeine count - 2 tulsi masala chais, 1 black tea
 
-* 2017 12 08, Friday
+## 2017 12 08, Friday
 
 spatch errors that I see frequently:
 
-spatch -sp-file convert_attr.cocci --dir ~/projects/linux/drivers/staging/ --use-idutils --debug
-
+```
+spatch -sp-file convert\_attr.cocci --dir ~/projects/linux/drivers/staging/ --use-idutils --debug
+```
 1.
 
+```
 @@
 identifier foo, bar;
 @@
@@ -166,6 +168,7 @@ identifier foo, bar;
 (...)
 
 disjunction parenthesis in line 6 column 0 matched to normal parenthesis on line 7
+```
 
 Coccinelle treats column 0 of any line in a special way. So we should only put
 characters on column 0 that we want to be treated specially like +, - , or
@@ -174,6 +177,7 @@ fixed by preceding the line with spaces.
 
 2.
 
+```
 @@
 identifier T, baz, foo, bar;
 @@
@@ -185,16 +189,17 @@ struct T baz = {
  }
 
 minus: parse error:
-  File "convert_attr.cocci", line 10, column 0, charpos = 78
+  File "convert\_attr.cocci", line 10, column 0, charpos = 78
   around = '',
   whole content =
+```
 
 The error thrown over here is not very helpful. It actually means that
 coccinelle expects here a valid C statement. A statement like struct device dev = {..}
 does not exist but struct dev = {...}; (followed by semi-colon) does.
 
-Wrote a coccinelle script to convert __ATTR macros to __DEVICE_ATTR in drivers.
-Need to write another to convert DEVICE_ATTR to DEVICE_ATTR_{RO/RW/WO} (these
+Wrote a coccinelle script to convert \_\_ATTR macros to DEVICE\_ATTR in drivers.
+Need to write another to convert DEVICE\_ATTR to DEVICE\_ATTR\_{RO/RW/WO} (these
 are subcases).
 
 Had another meeting with Julia. She was concerned about the number of falsely
@@ -202,3 +207,16 @@ positive macros. Suggested a technique to reward/penalise macros basis the
 presence of the declared attributes in Documentation/ABI. Since I found some
 220 macros and it will be cumbersome to look through all to rule out the bad
 ones, this should decrease the size of the set.
+
+## 2017 12 11, Monday
+
+End of a long and tiring weekend.
+
+Created a git repo for all cocci scripts:
+https://github.com/aishpant/cocci-scripts
+
+Sent a patch to replace \_\_ATTR in fbtft staging driver. Wrote a script to
+convert DEVICE\_ATTR to file permission specific variants (uploaded to
+cocci-scripts) and sent 2 patches using the same.
+
+Finished the Vikram Seth novel.

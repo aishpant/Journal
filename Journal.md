@@ -154,7 +154,7 @@ Caffeine count - 2 tulsi masala chais, 1 black tea
 spatch errors that I see frequently:
 
 ```
-spatch -sp-file convert\_attr.cocci --dir ~/projects/linux/drivers/staging/ --use-idutils --debug
+spatch -sp-file convert_attr.cocci --dir ~/projects/linux/drivers/staging/ --use-idutils --debug
 ```
 1.
 
@@ -189,7 +189,7 @@ struct T baz = {
  }
 
 minus: parse error:
-  File "convert\_attr.cocci", line 10, column 0, charpos = 78
+  File "convert_attr.cocci", line 10, column 0, charpos = 78
   around = '',
   whole content =
 ```
@@ -220,3 +220,110 @@ convert DEVICE\_ATTR to file permission specific variants (uploaded to
 cocci-scripts) and sent 2 patches using the same.
 
 Finished the Vikram Seth novel.
+
+## 2017 12 12, Tuesday & Wednesday
+
+Last couple of days. Fail and try a few things.
+
+I've got two variants of the scripts for converting DEVICE_ATTR to
+file permission specific ones.
+
+Here is one which converts declaration and renames show/store functions:
+
+```
+@r@
+identifier attr, show_fn;
+declarer name DEVICE_ATTR;
+@@
+
+DEVICE_ATTR(attr, \(S_IRUGO\|0444\), show_fn, NULL);
+
+@script: python p@
+attr_show;
+attr << r.attr;
+show_fn << r.show_fn;
+@@
+
+// standardise the show fn name to {attr}_show
+coccinelle.attr_show = attr + "_show"
+print (show_fn)
+@@
+identifier r.attr, r.show_fn;
+declarer name DEVICE_ATTR_RO;
+@@
+
+// change the attr declaration
+- DEVICE_ATTR(attr, \(S_IRUGO\|0444\), show_fn, NULL);
++ DEVICE_ATTR_RO(attr);
+
+@rr@
+identifier r.show_fn, p.attr_show;
+@@
+
+// rename the show function
+- show_fn
++ attr_show
+        (...) {
+        ...
+  }
+
+@depends on rr@
+identifier r.show_fn, p.attr_show;
+@@
+
+// rename fn usages
+- show_fun
++ attr_show
+```
+And then, there is type 2 which converts only when show/store function
+names match the specification:
+
+```
+@r@
+identifier attr, show_fn;
+declarer name DEVICE_ATTR;
+@@
+
+DEVICE_ATTR(attr, \(S_IRUGO\|0444\), show_fn, NULL);
+
+@script: python p@
+attr << r.attr;
+show_fn << r.show_fn;
+@@
+
+if (attr + '_show' != show_fn):
+        cocci.include_match(False)
+
+@@
+identifier r.attr, r.show_fn;
+declarer name DEVICE_ATTR_RO;
+@@
+
+// change the attr declaration
+- DEVICE_ATTR(attr, \(S_IRUGO\|0444\), show_fn, NULL);
++ DEVICE_ATTR_RO(attr);
+```
+
+This is safer to use as sometimes show/store functions are shared.
+
+I only sent a patch for staging drivers where the safer script was
+applicable. I'm not not sure if it would be welcome elsewhere as it's
+just a cleanup.
+
+I'm tracking cocci scripts in this repo :
+[cocci-scripts](https://github.com/aishpant/cocci-scripts)
+
+Julia suggested a method for reducing false postives where I mark
+up/down macros if the corresponding attributes are found/not-found in
+the documented sysfs attributes (since some attributes have very common
+names- id, dev etc).
+
+That did not work very well. So what I actually did was to look through
+macro names which did not have the word 'attr' or 'attribute' in them
+and manually ruled out the ones which were not attribute declarers (~20).
+
+And then I found a bug. To find the list of undocumented attrs, I was
+looking at the symmteric difference of found_attrs and documented_attrs.
+This is incorrect. Changed it to a set difference between found_attrs
+and documented_attrs. That brought down the number from ~2000 to ~900.
+These are stored in [result/undocumented_attrs.txt](https://github.com/aishpant/attribute-documentation/blob/master/result/undocumented_attrs.txt)

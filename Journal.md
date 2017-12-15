@@ -153,12 +153,12 @@ Caffeine count - 2 tulsi masala chais, 1 black tea
 
 spatch errors that I see frequently:
 
-```
+```c
 spatch -sp-file convert_attr.cocci --dir ~/projects/linux/drivers/staging/ --use-idutils --debug
 ```
 1.
 
-```
+```c
 @@
 identifier foo, bar;
 @@
@@ -177,7 +177,7 @@ fixed by preceding the line with spaces.
 
 2.
 
-```
+```c
 @@
 identifier T, baz, foo, bar;
 @@
@@ -230,7 +230,7 @@ file permission specific ones.
 
 Here is one which converts declaration and renames show/store functions:
 
-```
+```c
 @r@
 identifier attr, show_fn;
 declarer name DEVICE_ATTR;
@@ -278,7 +278,7 @@ identifier r.show_fn, p.attr_show;
 And then, there is type 2 which converts only when show/store function
 names match the specification:
 
-```
+```c
 @r@
 identifier attr, show_fn;
 declarer name DEVICE_ATTR;
@@ -327,3 +327,67 @@ looking at the symmteric difference of found_attrs and documented_attrs.
 This is incorrect. Changed it to a set difference between found_attrs
 and documented_attrs. That brought down the number from ~2000 to ~900.
 These are stored in [result/undocumented_attrs.txt](https://github.com/aishpant/attribute-documentation/blob/master/result/undocumented_attrs.txt)
+
+## 2017 12 14, Thursday
+
+Now, there is a massive problem with the script I have got. Finding
+undocumented attributes is not really the point, I need to find the complete
+sysfs path for a device/driver as the names themselves don't have to be unique.
+
+For eg, an attribute like volume could be present for two different attributes
+but documented for one and not the other.
+
+I need to track down how I can get from the attribute declaration to the path
+and update the searching process to take the path into account.
+
+Exciting stuff!
+
+This is really tricky now. There are numerous ways and preferred ways of adding
+files and folders to the sysfs hierarchy.
+
+```c
+# add a folder to the path (non-dynamic)
+# /sys/kernel/kobject_example
+example_kobj = kobject_create_and_add("kobject_example", kernel_kobj)
+
+# create the files associated with the object, the attrs in attr_group fall
+# under /sys/kernel/kobject_example/{attr}
+sysfs_create_group(example_kobj, &attr_group);
+# add one attr file
+sysfs_create_file(example_kobj, attr);
+# add multiple attrs files
+sysfs_create_files(example_kobj, &attr_group);
+
+# expose binary attribute
+int sysfs_create_bin_file(struct kobject *kobj, struct bin_attribute *attr);
+
+# create symbolic links
+int sysfs_create_link(struct kobject *kobj, struct kobject *target, char *name)
+
+# bus, device, driver registration
+BUS_ATTR(name, mode, show, store);
+int bus_create_file(struct bus_type *bus, struct bus_attribute *attr);
+
+# device registration
+DEVICE_ATTR(name, mode, show, store);
+int device_create_file(struct device *device,
+                       struct device_attribute *entry);
+
+```
+
+Chapter-14 from Linux Device Drivers (The Linux Device Model) and the code in
+scripts/kobject/kobject-example.c helped me understand the formation of the
+hierarchy. I am going to look into The Linux Programming Interface as well.
+
+I'm going to read up the chapter again and then write a kernel module to
+document the various ways in which you can expose sysfs attrubutes.
+
+Julia asked me create a spreadsheet of all non-documented attributes and along
+with info about where and how they declared and whether they are documented but
+outside of Documentation/ABI. It seems like we will be focusing on moving
+documentation that is already there to the right place.
+
+Trivia: the manpage for sysfs was created as recently as September 15, 2017 and
+was part of the 4.13 release. (man 5 sysfs)
+
+Caffeine count: 1 filter coffee, 2 tulsi malasa chais

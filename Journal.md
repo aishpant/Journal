@@ -391,3 +391,158 @@ Trivia: the manpage for sysfs was created as recently as September 15, 2017 and
 was part of the 4.13 release. (man 5 sysfs)
 
 Caffeine count: 1 filter coffee, 2 tulsi malasa chais
+
+## 2017 12 21, Thursday
+
+A week in which not much happened. For the next 7 days, I will be in Pune.
+
+Added a [table on undocumented
+attributes](https://github.com/aishpant/attribute-documentation/blob/master/result/output.csv)
+with some more info. There are 4 columns here - attribute name, macro, filename,
+is somewhere in Documentation.
+
+The last column for now has two values- either Maybe or No. Maybe means that a
+simple grep for the attribute name in Documentation/\* produced a match and No is
+the opposite.
+
+The sysfs implementations of drivers is quite complex and varied. I started
+writing the module and realised it is not a real representation. So I decided to
+look at how class subsystem attributes are defined and then walk backwards from
+it.
+
+Julia and I had another meeting yesterday. The focus of this week is on
+documenting hwmon in ABI.
+
+For eg. all of hwmon driver attributes are documented quite nicely in
+Documentation/hwmon/sysfs-interface and in the driver specific files.
+
+```
+Documentation/hwmon/sht3x:
+
+sysfs-Interface
+---------------
+
+temp1_input:        temperature input
+humidity1_input:    humidity input
+temp1_max:          temperature max value
+...
+```
+This is not in the ABI subdirectory and is not in the format used there.
+
+Second focus is on writing a module to document class interface. It just so
+happens that discovering devices through class interface is the easiest. And
+most drivers including hwmon follow this standard. class interface allows you to
+work with devices based on what they do, rather than how they are connected or
+what they do. hwmon (hardware monitoring) is built into the kernel and you can
+access it from /sys/class/hwmon/hwmon[0-\*].
+
+If I had to discover all the hwmon devices from sysfs, this is how I would do
+it:
+
+```bash
+find /sys/ -name '*hwmon*'
+
+/sys/devices/platform/coretemp.0/hwmon
+/sys/devices/platform/coretemp.0/hwmon/hwmon2
+/sys/devices/virtual/hwmon
+/sys/devices/virtual/hwmon/hwmon0
+/sys/devices/virtual/hwmon/hwmon1
+/sys/class/hwmon
+/sys/class/hwmon/hwmon2
+/sys/class/hwmon/hwmon0
+/sys/class/hwmon/hwmon1
+/sys/module/hwmon_vid
+
+ls -al /sys/class/hwmon
+
+total 0
+drwxr-xr-x  2 root root 0 Dec 21 16:54 .
+drwxr-xr-x 57 root root 0 Dec 21 16:54 ..
+lrwxrwxrwx  1 root root 0 Dec 21 17:02 hwmon0 -> ../../devices/virtual/hwmon/hwmon0
+lrwxrwxrwx  1 root root 0 Dec 21 17:02 hwmon1 -> ../../devices/virtual/hwmon/hwmon1
+lrwxrwxrwx  1 root root 0 Dec 21 17:02 hwmon2 -> ../../devices/platform/coretemp.0/hwmon/hwmon2
+```
+
+Step-1 for writing classes : Create an instance of struct class. Name here is
+'hwmon'.
+
+```c
+static struct class hwmon_class = {
+	.name = "hwmon",
+	.owner = THIS_MODULE,
+	.dev_groups = hwmon_dev_attr_groups,
+	.dev_release = hwmon_dev_release,
+};
+
+```
+
+Managing classes:
+
+```c
+int class_register (struct class *cls);
+void class_unregister (struct class *cls);
+```
+
+```c
+static int __init hwmon_init(void)
+{
+	int err;
+
+	hwmon_pci_quirks();
+
+	err = class_register(&hwmon_class);
+	if (err) {
+		pr_err("couldn't register hwmon sysfs class\n");
+		return err;
+	}
+	return 0;
+}
+
+static void __exit hwmon_exit(void)
+{
+	class_unregister(&hwmon_class);
+}
+```
+
+Defining class attributes (not widely used):
+
+```c
+CLASS_ATTR(name, mode, show, store);
+int class_create_file(struct class *cls, const struct class_attribute *attr);
+```
+
+There is a paper on sysfs from [2005](https://www.kernel.org/pub/linux/kernel/people/mochel/doc/papers/ols-2005/mochel.pdf). Very introductory optimistic paper.
+
+What really is udev? And how does it use uevents?
+
+[Kernel Recipes 2016 - The Linux Driver
+Model](https://www.youtube.com/watch?v=AdPxeGHIZ74)
+
+This talk by Greg is an update on the Ch-14 of Linux Driver Drivers.
+
+Summary:
+
+You never really need to work with or know internals of kobjects, or ksets or
+kobj\_type. These are fundamental objects (like base classes of OOP) emebedded
+in other high level objects.
+
+Relevant for driver writers-
+1. Use only attribute groups for exposing sysfs attributes.
+2. Never use any of the sysfs\_\* functions or work with kobjects except for
+   maybe the sysfs\_notify function
+3. Never use platform\_device
+4. Use a class or bus interface and not deal with raw kobjects to avoid
+   boilerplate code. class\_create() and class\_destroy()
+
+The userspace APIs are a huge mess. No one really knows how to use them well and
+they keep evolving. I keep seeing a different implementation in every driver. This is
+taking much much longer than expected.
+Most every day I do these things:
+
+1. Read a lot of code and understand a little
+2. Run git grep on some API from LDD and find that it's deprecated
+3. Run a lot of git grep. I checked my command line history and found out that I
+   ran git grep 347 times in 3866 commands or ~9% of the time
+4. Look for articles/discussions/conference talks on the device model and the
+   kernel userspace API. LWN is the best resource but I would not recommend
+   anyone to use their search API (P.S. it's the worst)

@@ -546,3 +546,17 @@ Most every day I do these things:
 4. Look for articles/discussions/conference talks on the device model and the
    kernel userspace API. LWN is the best resource but I would not recommend
    anyone to use their search API (P.S. it's the worst)
+
+
+References:
+1. [Driver porting: Device model overview 2003](https://lwn.net/Articles/31185/)
+2. [Driving Me Nuts Device Classes 2003](http://www.linuxjournal.com/node/6872/print)
+3. [The zen of kobjects 2003](https://lwn.net/Articles/51437/)
+4. [LDD - Chapter 14 The Linux Device Model 2005](https://static.lwn.net/images/pdf/LDD3/ch14.pdf)
+5. [Kernel Recipes 2016 - The Linux Driver Model](https://www.youtube.com/watch?v=AdPxeGHIZ74)
+6. [Linux Device Model Carlos Maiolino 2016](https://www.youtube.com/watch?v=3xWjydfxqvk)
+7. [How to create a sysfs file correctly 2013](http://kroah.com/log/blog/2013/06/26/how-to-create-a-sysfs-file-correctly/)
+8. From kernel sources - Documentation/filesystems/sysfs\*.txt, Documentation/kobject.txt
+9. [sysfs and a stable kernel ABI 2006](https://lwn.net/Articles/172986/)
+10. [Porting device drivers to 2.6 kernel](https://lwn.net/Articles/driver-porting/)
+11. [Device Model](http://bravegnu.org/device-model/device-model.txt) 

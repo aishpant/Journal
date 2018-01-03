@@ -559,4 +559,33 @@ References:
 8. From kernel sources - Documentation/filesystems/sysfs\*.txt, Documentation/kobject.txt
 9. [sysfs and a stable kernel ABI 2006](https://lwn.net/Articles/172986/)
 10. [Porting device drivers to 2.6 kernel](https://lwn.net/Articles/driver-porting/)
-11. [Device Model](http://bravegnu.org/device-model/device-model.txt) 
+11. [Device Model](http://bravegnu.org/device-model/device-model.txt)
+
+## 2018 01 01, Monday
+
+Things to do-
+
+1. Finish up the blog post on project description
+2. Should plan to write one on coccinelle
+3. Move rtc ABI documentation
+4. Identify places where documentation is present in ABI but has maybe a few
+   attributes missing
+5. Write a script to parse emails to look for attribute
+
+## 2018 01 03, Wednesday
+
+New year etc lethargy is over. Time to get stuff done.
+
+Meeting notes. Tasks for this week.
+
+1. Convert DEVICE\_ATTR to DEVICE\_ATTR\_{RO/RW/WO} for drivers, given that
+   spatch works.
+2. Add status against the undocumented attributes table. Status - moved, nacked,
+   any other reason etc.
+3. Focus on collecting dexriptions for attributes that are entirely
+   undocumented ( i.e. no info anywhere within the Documentation/ folder)
+4. Send a few more emails checking if sysfs interface is okay to move to ABI
+5. Write more blog posts!
+
+Julia has also been asking me to work on finding full attribute paths. It's not
+trivial and I think it would be too much work at the moment.
